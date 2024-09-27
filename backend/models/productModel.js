@@ -25,7 +25,7 @@ const productSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    size:{
+    sizes:{
         type:Array,
         required:true,
     },
@@ -38,4 +38,4 @@ const productSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('product',productSchema);
+module.exports = mongoose.model('Product',productSchema);

@@ -1,19 +1,40 @@
+const cloudinary = require('cloudinary').v2
+const Product = require('../models/productModel');
 
 //Add Product Funciton
 const addProduct = async(req,res) =>{
     try{
-        const {name,description,price,category,subCategory,size,bestseller} = req.body;
-        // const image1 = req.files.image1[0];
-        // const image2 = req.files.image2[0];
-        // const image3 = req.files.image3[0];
-        // const image4 = req.files.image4[0];
+        const {name,description,price,category,subCategory,sizes,bestseller} = req.body;
+        const image1 = req.files.image1 && req.files.image1[0];
+        const image2 = req.files.image2 && req.files.image2[0];
+        const image3 = req.files.image3 && req.files.image3[0];
+        const image4 = req.files.image4 && req.files.image4[0];
 
-        console.log(name,description,price,category,subCategory,size,bestseller);
-        // console.log(image1,image2,image3,image4);
+        const images = [image1,image2,image3,image4].filter((item) =>item !== undefined);
+
+        let imagesUrl = await Promise.all(
+            images.map(async(item)=>{
+                let result = await cloudinary.uploader.upload(item.path,{resource_type:"image"})
+                return result.secure_url;
+            })
+        )
+
+        const productData = await Product.create({
+            name,
+            description,
+            price:Number(price),
+            category,
+            subCategory,
+            sizes:JSON.parse(sizes),
+            bestseller:bestseller == "true"?true:false,
+            image:imagesUrl,
+            date:Date.now()
+        })
 
         res.json({
             success:true,
-            message:'Product added successfully'
+            message:'Product added successfully',
+            product:productData
         })
     }
     catch(error){
