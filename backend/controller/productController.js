@@ -1,4 +1,5 @@
 const cloudinary = require('cloudinary').v2
+const productModel = require('../models/productModel');
 const Product = require('../models/productModel');
 
 //Add Product Funciton
@@ -48,7 +49,17 @@ const addProduct = async(req,res) =>{
 
 //List Product Funciton
 const listProducts = async(req,res) =>{
-
+    try{
+        const products = await productModel.find({});
+        return res.json({
+            success:true,
+            products
+        })
+    }
+    catch(error){
+        console.log("Error Occur in List Product Route",error);
+        return res.json("Error Occur in List Product Route");
+    }
 }
 
 //Remove Product Funciton
