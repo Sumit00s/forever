@@ -64,12 +64,39 @@ const listProducts = async(req,res) =>{
 
 //Remove Product Funciton
 const removeProduct = async(req,res) =>{
-
+    try{
+        await productModel.findByIdAndDelete(req.body.id);
+        return res.json({
+            success:true,
+            message:'Product removed successfully'
+        })
+    }
+    catch(error){
+        console.log("Error Occur in Remove Product Route",error.message);
+        return res.json({
+            success:false,
+            message:error.message
+        });
+    } 
 }
 
 //Single Product Funciton
 const singleProduct = async(req,res) =>{
-
+    try{
+        const {productId} = req.body;
+        const product = await productModel.findById(productId);
+        return res.json({
+            success:true,
+            product
+        })
+    }
+    catch(error){
+        console.log("Error Occur in Single Product Controller",error.message);
+        return res.json({
+            success:false,
+            message:error.message
+        });
+    }
 }
 
 module.exports = {addProduct,listProducts,removeProduct,singleProduct};
