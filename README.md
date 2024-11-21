@@ -1,3 +1,7 @@
- Get started by customizing your environment (defined in the .idx/dev.nix file) with the tools and IDE extensions you'll need for your project!
+#Build An Amazing Ecommerce Site :
+#TechStak:
+1) Fontend: Reactjs
+2) Css : Tailwind
+3) Backend: Node.js,Express.js
+4) Database: MongoDB
 
-Learn more at https://developers.google.com/idx/guides/customize-idx-env# forever

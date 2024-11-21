@@ -80,7 +80,24 @@ const removeProduct = async(req,res) =>{
 
 //Single Product Funciton
 const singleProduct = async(req,res) =>{
+
     const single_product = await productModel.findById(req.body.id);
+
+    try{
+        const {productId} = req.body;
+        const product = await productModel.findById(productId);
+        return res.json({
+            success:true,
+            product
+        })
+    }
+    catch(error){
+        console.log("Error Occur in Single Product Controller",error.message);
+        return res.json({
+            success:false,
+            message:error.message
+        });
+    }
 }
 
 module.exports = {addProduct,listProducts,removeProduct,singleProduct};
