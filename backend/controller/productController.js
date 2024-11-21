@@ -64,12 +64,23 @@ const listProducts = async(req,res) =>{
 
 //Remove Product Funciton
 const removeProduct = async(req,res) =>{
-
+    try{
+        const delete_product = await productModel.findByIdAndDelete(req.body.id);
+        res.json({
+            success:true,
+            message:"Product Deleted Successfuly",
+            delete_product
+        })
+    }
+    catch(error){
+        console.log("Error Occur in Remove Product Controller",error);
+        return res.json("Error Occur In Remove Product Route")
+    }
 }
 
 //Single Product Funciton
 const singleProduct = async(req,res) =>{
-
+    const single_product = await productModel.findById(req.body.id);
 }
 
 module.exports = {addProduct,listProducts,removeProduct,singleProduct};

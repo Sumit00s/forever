@@ -1,4 +1,3 @@
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:907505288.
 const express = require('express');
 const router = express.Router();
 
